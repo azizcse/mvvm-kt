@@ -27,7 +27,8 @@ import java.util.concurrent.Callable
 *  ****************************************************************************
 */
 
-class ContactViewModel internal constructor(private val contactRepository: ContactRepository):BaseViewModel(){
+class ContactViewModel internal constructor(
+        private val contactRepository: ContactRepository):BaseViewModel(){
 
     fun getAllUsers():LiveData<List<ContactEntity>>{
         return LiveDataReactiveStreams.fromPublisher(contactRepository.getContacts())
