@@ -35,6 +35,11 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     private final val DEFAULT_VALUE = 0
     protected var mBaseCurrentFragment: Fragment? = null
 
+    //Abstract method
+
+    abstract fun startView();
+    abstract fun stopView();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val layout = getLayoutId
@@ -47,6 +52,12 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
             toolbar = findViewById(toolbarId)
             setSupportActionBar(toolbar)
         }
+        startView()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopView()
     }
 
     fun getToolbar():Toolbar{

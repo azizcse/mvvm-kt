@@ -1,7 +1,8 @@
-package org.workfort.base
+package org.workfort.base.ui.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import org.workfort.base.R
 
 class MainActivity : AppCompatActivity() {
 
