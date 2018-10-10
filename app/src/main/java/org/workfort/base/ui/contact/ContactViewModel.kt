@@ -2,17 +2,9 @@ package org.workfort.base.ui.contact
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
-import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.Transformations
-import android.database.Cursor
-import io.reactivex.Emitter
-import io.reactivex.Flowable
-import io.reactivex.functions.BiFunction
-import io.reactivex.functions.Consumer
 import org.workfort.base.data.contact.ContactEntity
 import org.workfort.base.data.contact.ContactRepository
 import org.workfort.base.ui.base.BaseViewModel
-import java.util.concurrent.Callable
 
 /*
 *  ****************************************************************************
