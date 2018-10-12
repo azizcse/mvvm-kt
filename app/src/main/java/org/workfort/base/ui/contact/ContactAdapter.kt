@@ -1,9 +1,13 @@
 package org.workfort.base.ui.contact
 
+import android.databinding.ViewDataBinding
+import android.view.View
 import android.view.ViewGroup
 import com.core.kbasekit.ui.base.BaseAdapter
 import com.core.kbasekit.ui.base.BaseViewHolder
+import org.workfort.base.R
 import org.workfort.base.data.contact.ContactEntity
+import org.workfort.base.databinding.ItemContactBinding
 
 
 /*
@@ -25,8 +29,24 @@ class ContactAdapter : BaseAdapter<ContactEntity>() {
     }
 
     override fun newViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<ContactEntity> {
-        return null!!
+        return ContactViewHolder(inflate(parent!!, R.layout.item_contact))!!
     }
 
+    private inner class ContactViewHolder(viewDataBinding: ViewDataBinding) : BaseViewHolder<ContactEntity>(viewDataBinding) {
+        private val itemContactBinding: ItemContactBinding
+
+        init {
+            itemContactBinding = viewDataBinding as ItemContactBinding
+        }
+
+        override fun bind(item: ContactEntity) {
+            itemContactBinding.contact = item
+        }
+
+        override fun onClick(p0: View?) {
+
+        }
+
+    }
 
 }

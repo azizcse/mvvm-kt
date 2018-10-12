@@ -1,6 +1,9 @@
 package com.core.kbasekit.ui.base
 
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.ViewGroup
 
 
@@ -85,6 +88,10 @@ open abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
     override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
         var item: T = getItem(position)
         holder?.bind(item)
+    }
+
+    fun inflate(viewGroup: ViewGroup, item_layout: Int): ViewDataBinding {
+        return DataBindingUtil.inflate(LayoutInflater.from(viewGroup.context), item_layout, viewGroup, false)
     }
 
     abstract fun newViewHolder(parent: ViewGroup?, viewType: Int): BaseViewHolder<T>

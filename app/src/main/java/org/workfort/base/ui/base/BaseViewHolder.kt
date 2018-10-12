@@ -1,5 +1,6 @@
 package com.core.kbasekit.ui.base
 
+import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.View
 
@@ -15,13 +16,23 @@ import android.view.View
 *  ****************************************************************************
 */
 
-abstract class BaseViewHolder<T>(itemView: View?)
-    : RecyclerView.ViewHolder(itemView!!), View.OnClickListener {
+abstract class BaseViewHolder<T>constructor(private val viewDataBinding: ViewDataBinding)
+    : RecyclerView.ViewHolder(viewDataBinding.root), View.OnClickListener {
 
     abstract fun bind(item: T)
     protected fun setClickListener(vararg views: View) {
         for (view in views) {
             view.setOnClickListener(this)
         }
+    }
+
+    fun setOnclick(vararg views : View){
+        for (view : View in views){
+            view.setOnClickListener(this)
+        }
+    }
+
+    fun getViewBinding():ViewDataBinding{
+        return viewDataBinding
     }
 }

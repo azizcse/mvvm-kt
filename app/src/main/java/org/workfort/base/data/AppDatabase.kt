@@ -33,15 +33,17 @@ abstract class AppDatabase: RoomDatabase() {
 
         fun getInstance(context: Context): AppDatabase {
             return instance ?: synchronized(this) {
-                instance ?: buildDatabase(context).also { instance = it }
+                instance ?: buildDatabase(context, "Hello_db").also { instance = it }
             }
         }
 
-        private fun buildDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(context, AppDatabase::class.java, DATABASE_NAME)
+        private fun buildDatabase(context: Context, dbName: String): AppDatabase {
+            return Room.databaseBuilder(context, AppDatabase::class.java, dbName)
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
+                            //val request = OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build()
+                            //WorkManager.getInstance().enqueue(request)
                         }
                     })
                     .build()

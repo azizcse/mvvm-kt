@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.util.Log
 import android.view.View
 import org.workfort.base.R
 import org.workfort.base.data.contact.ContactEntity
@@ -42,19 +43,26 @@ class ContactActivity : BaseActivity() {
         subscribForData()
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView() {
         binding.recyclerView.adapter
     }
+
     private fun subscribForData() {
-        contactViewModel.getAllUsers().observe(this, object : Observer<List<ContactEntity>> {
+      /*  contactViewModel.getAllUsers().observe(this, object : Observer<List<ContactEntity>> {
             override fun onChanged(userEntities: List<ContactEntity>?) {
+            }
+        })*/
+
+        contactViewModel.getString().observe(this, object : Observer<String> {
+            override fun onChanged(t: String?) {
+                Log.e("Live_data","Value from ld ="+t)
             }
         })
     }
 
-    override fun stopView() { }
+    override fun stopView() {}
 
-    override fun onClick(view: View?) { }
+    override fun onClick(view: View?) {}
 
     private fun getViewModel(): ContactViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {

@@ -2,6 +2,7 @@ package org.workfort.base.data.contact
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
 import org.workfort.base.data.BaseEntity
@@ -26,6 +27,7 @@ import org.workfort.base.data.TableName
 data class ContactEntity(
         @ColumnInfo(name = ColumnName.COLUMN_NAME)
         val name :String,
+        @PrimaryKey
         @ColumnInfo(name=ColumnName.COLUMN_NUMBER)
         val number : String) : Parcelable {
 

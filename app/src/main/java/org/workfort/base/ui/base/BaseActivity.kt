@@ -71,7 +71,7 @@ abstract class BaseActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        if(getLayoutId > DEFAULT_VALUE){
+        if(getMenuId > DEFAULT_VALUE){
             menuInflater.inflate(getLayoutId, menu)
         }
         return super.onCreateOptionsMenu(menu)

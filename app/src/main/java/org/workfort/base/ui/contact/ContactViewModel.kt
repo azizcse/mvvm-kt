@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveDataReactiveStreams
 import org.workfort.base.data.contact.ContactEntity
 import org.workfort.base.data.contact.ContactRepository
 import org.workfort.base.ui.base.BaseViewModel
+import org.workfort.base.util.runOnIoThread
 
 /*
 *  ****************************************************************************
@@ -20,10 +21,32 @@ import org.workfort.base.ui.base.BaseViewModel
 */
 
 class ContactViewModel internal constructor(
-        private val contactRepository: ContactRepository):BaseViewModel(){
+        private val contactRepository: ContactRepository) : BaseViewModel() {
+    private lateinit var otherTask: OtherTask
 
-    fun getAllUsers():LiveData<List<ContactEntity>>{
+    init {
+        otherTask = OtherTask()
+    }
+
+    fun getAllUsers(): LiveData<List<ContactEntity>> {
         return LiveDataReactiveStreams.fromPublisher(contactRepository.getContacts())
+    }
+
+    fun getString(): LiveData<String> {
+        return otherTask
+    }
+
+    private inner class OtherTask : LiveData<String> {
+        constructor() {
+            loadData()
+        }
+
+        private fun loadData() {
+            runOnIoThread {
+                Thread.sleep(4000)
+            }
+            value = "Hello from BT"
+        }
     }
 
 }
