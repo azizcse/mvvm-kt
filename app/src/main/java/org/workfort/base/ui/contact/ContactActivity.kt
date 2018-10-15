@@ -11,7 +11,7 @@ import org.workfort.base.R
 import org.workfort.base.data.contact.ContactEntity
 import org.workfort.base.databinding.ActivityContactBinding
 import org.workfort.base.ui.base.BaseActivity
-import org.workfort.base.util.ViewInjector
+import org.workfort.base.util.ViewModelInjector
 
 
 /*
@@ -85,7 +85,7 @@ class ContactActivity : BaseActivity() {
     private fun getViewModel(): ContactViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return ViewInjector.provideContactViewModel(this@ContactActivity) as T
+                return ViewModelInjector.provideContactViewModel(this@ContactActivity) as T
             }
         }).get(ContactViewModel::class.java!!)
     }

@@ -11,7 +11,7 @@ import org.workfort.base.ui.contact.ContactViewModel
 *  * Created by : Md. Azizul Islam on 10/10/2018 at 6:47 PM.
 *  * Email : azizul@w3engineers.com
 *  * 
-*  * Purpose:
+*  * Purpose: Inject view model on UI
 *  *
 *  * Last edited by : Md. Azizul Islam on 10/10/2018.
 *  * 
@@ -19,7 +19,7 @@ import org.workfort.base.ui.contact.ContactViewModel
 *  ****************************************************************************
 */
 
-object ViewInjector {
+object ViewModelInjector {
     private fun getContactRepository(context: Context): ContactRepository {
         return ContactRepository.getInstance(AppDatabase.getInstance(context).getContactDao())
     }
