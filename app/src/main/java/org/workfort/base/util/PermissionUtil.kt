@@ -38,20 +38,17 @@ class PermissionUtil {
     }
 
     fun request(vararg values: String): Boolean {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true
-        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return true
 
         val finalArgs = ArrayList<String>()
+
         for (item: String in values) {
             if (context!!.checkSelfPermission(item) != PackageManager.PERMISSION_GRANTED) {
                 finalArgs.add(item)
             }
         }
 
-        if (finalArgs.isEmpty()) {
-            return true
-        }
+        if (finalArgs.isEmpty()) return true
 
         (context as Activity).requestPermissions(finalArgs.toTypedArray(), REQUEST_CODE)
 
@@ -61,13 +58,12 @@ class PermissionUtil {
     fun isAllowed(str: String): Boolean {
         if (context == null) return false
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return true
-        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return true
 
-        return if (context!!.checkSelfPermission(str) == PackageManager.PERMISSION_GRANTED) {
+        return if (context!!.checkSelfPermission(str) == PackageManager.PERMISSION_GRANTED)
             true
-        } else false
+        else
+            false
 
     }
 }
