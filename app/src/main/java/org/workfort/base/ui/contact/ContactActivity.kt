@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
 import org.workfort.base.R
@@ -29,6 +30,7 @@ import org.workfort.base.util.ViewInjector
 class ContactActivity : BaseActivity() {
     private lateinit var binding: ActivityContactBinding
     private lateinit var contactViewModel: ContactViewModel
+    private lateinit var contactAdapter: ContactAdapter
     override val getLayoutId: Int
         get() = R.layout.activity_contact
     override val getMenuId: Int
@@ -38,20 +40,26 @@ class ContactActivity : BaseActivity() {
 
     override fun startView() {
         binding = getViewBinding() as ActivityContactBinding
+        binding!!.buttonSave.setOnClickListener(this)
+        binding!!.buttonDelete.setOnClickListener(this)
         contactViewModel = getViewModel()
         initRecyclerView()
         subscribForData()
     }
 
     private fun initRecyclerView() {
-        binding.recyclerView.adapter
+        contactAdapter = ContactAdapter()
+        binding.recyclerView.adapter = contactAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
     private fun subscribForData() {
-      /*  contactViewModel.getAllUsers().observe(this, object : Observer<List<ContactEntity>> {
+        contactViewModel.getAllUsers().observe(this, object : Observer<List<ContactEntity>> {
             override fun onChanged(userEntities: List<ContactEntity>?) {
+                contactAdapter.clear()
+                contactAdapter.addItems(userEntities!!)
             }
-        })*/
+        })
 
         contactViewModel.getString().observe(this, object : Observer<String> {
             override fun onChanged(t: String?) {
@@ -62,7 +70,17 @@ class ContactActivity : BaseActivity() {
 
     override fun stopView() {}
 
-    override fun onClick(view: View?) {}
+    override fun onClick(view: View?) {
+        when(view!!.id){
+            R.id.button_save->{
+              contactViewModel.saveContact()
+            }
+
+            R.id.button_delete->{
+                contactViewModel.deleteItem(contactAdapter.getItem(contactAdapter.itemCount-1))
+            }
+        }
+    }
 
     private fun getViewModel(): ContactViewModel {
         return ViewModelProviders.of(this, object : ViewModelProvider.Factory {

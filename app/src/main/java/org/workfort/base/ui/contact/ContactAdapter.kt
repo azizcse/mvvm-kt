@@ -34,18 +34,11 @@ class ContactAdapter : BaseAdapter<ContactEntity>() {
 
     private inner class ContactViewHolder(viewDataBinding: ViewDataBinding) : BaseViewHolder<ContactEntity>(viewDataBinding) {
         private val itemContactBinding: ItemContactBinding
-
-        init {
-            itemContactBinding = viewDataBinding as ItemContactBinding
-        }
-
+        init { itemContactBinding = viewDataBinding as ItemContactBinding }
         override fun bind(item: ContactEntity) {
             itemContactBinding.contact = item
         }
-
-        override fun onClick(p0: View?) {
-
-        }
+        override fun onClick(p0: View?) {  }
 
     }
 

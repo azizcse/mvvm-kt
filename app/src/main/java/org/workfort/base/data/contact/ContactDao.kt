@@ -1,6 +1,7 @@
 package org.workfort.base.data.contact
 
 import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import io.reactivex.Flowable
@@ -26,4 +27,7 @@ interface ContactDao {
 
     @Query("SELECT * FROM "+TableName.TABLE_CONTACT)
     fun getAllContacts():Flowable<List<ContactEntity>>
+
+    @Delete
+    fun deleteItem(contactEntity: ContactEntity):Int
 }
