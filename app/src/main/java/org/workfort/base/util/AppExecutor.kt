@@ -1,5 +1,7 @@
 package org.workfort.base.util
 
+import android.os.Handler
+import android.os.Looper
 import java.util.concurrent.Executors
 
 
@@ -17,7 +19,17 @@ import java.util.concurrent.Executors
 */
 
 private val IO_EXECUTOR = Executors.newSingleThreadExecutor()
+private val handler : Handler = Handler(Looper.getMainLooper())
 
 fun runOnIoThread(t: () -> Unit) {
     IO_EXECUTOR.execute(t)
+}
+
+
+fun runOnUiThread(t:()->Unit){
+    handler.post(t)
+}
+
+fun runOnUiThread(t: () -> Unit, delay:Long){
+    handler.postDelayed(t, delay)
 }
