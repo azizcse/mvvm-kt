@@ -8,6 +8,7 @@ import org.workfort.base.data.contact.ContactEntity
 import org.workfort.base.data.contact.ContactRepository
 import org.workfort.base.ui.base.BaseViewModel
 import org.workfort.base.util.runOnIoThread
+import org.workfort.base.util.runOnUiThread
 import java.util.*
 
 /*
@@ -48,7 +49,7 @@ class ContactViewModel internal constructor(
                 .subscribe())
     }
 
-    fun deleteItem(contactEntity :ContactEntity) {
+    fun deleteItem(contactEntity :ContactEntity?) {
         if(contactEntity == null) return
 
         getDisposable().add(contactRepository.deleteItem(contactEntity)
@@ -65,8 +66,12 @@ class ContactViewModel internal constructor(
         private fun loadData() {
             runOnIoThread {
                 Thread.sleep(4000)
+                runOnUiThread {
+                    value = "Hello from BT"
+                }
+
             }
-            value = "Hello from BT"
+
         }
     }
 
