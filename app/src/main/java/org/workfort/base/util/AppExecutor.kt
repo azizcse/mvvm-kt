@@ -10,7 +10,7 @@ import java.util.concurrent.Executors
 *  * Created by : Md. Azizul Islam on 10/10/2018 at 6:41 PM.
 *  * Email : azizul@w3engineers.com
 *  * 
-*  * Purpose:
+*  * Purpose: Run task both on UI and bask end thread
 *  *
 *  * Last edited by : Md. Azizul Islam on 10/10/2018.
 *  * 

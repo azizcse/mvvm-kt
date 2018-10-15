@@ -20,11 +20,7 @@ abstract class BaseViewHolder<T>constructor(private val viewDataBinding: ViewDat
     : RecyclerView.ViewHolder(viewDataBinding.root), View.OnClickListener {
 
     abstract fun bind(item: T)
-    protected fun setClickListener(vararg views: View) {
-        for (view in views) {
-            view.setOnClickListener(this)
-        }
-    }
+
 
     fun setOnclick(vararg views : View){
         for (view : View in views){
