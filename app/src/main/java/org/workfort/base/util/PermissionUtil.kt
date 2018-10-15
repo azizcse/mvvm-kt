@@ -12,7 +12,7 @@ import java.util.ArrayList
 *  * Created by : Md. Azizul Islam on 10/15/2018 at 5:14 PM.
 *  * Email : azizul@w3engineers.com
 *  * 
-*  * Purpose:
+*  * Purpose: To check permission
 *  *
 *  * Last edited by : Md. Azizul Islam on 10/15/2018.
 *  * 
