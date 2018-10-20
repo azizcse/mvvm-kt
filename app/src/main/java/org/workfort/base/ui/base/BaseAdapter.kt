@@ -32,7 +32,8 @@ open abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
         notifyItemInserted(mItemList.size - 1)
     }
 
-    fun getItem(pos: Int): T {
+    fun getItem(pos: Int): T? {
+        if(mItemList.size == 0 || pos >= mItemList.size) return null
         return mItemList.get(pos)
     }
 
@@ -86,8 +87,8 @@ open abstract class BaseAdapter<T> : RecyclerView.Adapter<BaseViewHolder<T>>() {
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<T>, position: Int) {
-        var item: T = getItem(position)
-        holder?.bind(item)
+        var item: T? = getItem(position)
+        holder.bind(item!!)
     }
 
     fun inflate(viewGroup: ViewGroup, item_layout: Int): ViewDataBinding {

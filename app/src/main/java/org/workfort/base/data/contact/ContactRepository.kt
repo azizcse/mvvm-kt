@@ -1,5 +1,7 @@
 package org.workfort.base.data.contact
 
+import io.reactivex.Single
+
 
 /*
 *  ****************************************************************************
@@ -27,4 +29,15 @@ class ContactRepository private constructor(private val contactDao: ContactDao) 
     }
 
     fun getContacts() = contactDao.getAllContacts()
+
+    fun saveContact(contactEntity: ContactEntity):Single<ContactEntity>{
+        return Single.create{e->
+            contactDao.insert(contactEntity)
+        }
+    }
+    fun deleteItem(contactEntity: ContactEntity):Single<String>{
+        return Single.create{e->
+            contactDao.deleteItem(contactEntity)
+        }
+    }
 }

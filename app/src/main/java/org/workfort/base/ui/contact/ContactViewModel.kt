@@ -2,10 +2,14 @@ package org.workfort.base.ui.contact
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.LiveDataReactiveStreams
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import org.workfort.base.data.contact.ContactEntity
 import org.workfort.base.data.contact.ContactRepository
 import org.workfort.base.ui.base.BaseViewModel
 import org.workfort.base.util.runOnIoThread
+import org.workfort.base.util.runOnUiThread
+import java.util.*
 
 /*
 *  ****************************************************************************
@@ -36,6 +40,24 @@ class ContactViewModel internal constructor(
         return otherTask
     }
 
+    fun saveContact(){
+        val number = UUID.randomUUID().toString()
+        val contactEntity= ContactEntity("Aziz",number)
+        getDisposable().add(contactRepository.saveContact(contactEntity)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe())
+    }
+
+    fun deleteItem(contactEntity :ContactEntity?) {
+        if(contactEntity == null) return
+
+        getDisposable().add(contactRepository.deleteItem(contactEntity)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe())
+    }
+
     private inner class OtherTask : LiveData<String> {
         constructor() {
             loadData()
@@ -44,8 +66,12 @@ class ContactViewModel internal constructor(
         private fun loadData() {
             runOnIoThread {
                 Thread.sleep(4000)
+                runOnUiThread {
+                    value = "Hello from BT"
+                }
+
             }
-            value = "Hello from BT"
+
         }
     }
 
