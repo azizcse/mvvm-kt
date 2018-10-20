@@ -26,7 +26,7 @@ fun runOnIoThread(t: () -> Unit) {
 }
 
 
-fun runOnUiThread(t:()->Unit){
+fun runOnUiThread(t:()->Unit){  
     handler.post(t)
 }
 
