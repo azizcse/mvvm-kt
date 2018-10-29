@@ -1,6 +1,7 @@
 package org.workfort.base.ui.main
 
 import org.workfort.base.ui.base.BaseViewModel
+import org.workfort.base.util.runOnUiThread
 
 
 /*
@@ -17,4 +18,9 @@ import org.workfort.base.ui.base.BaseViewModel
 */
 
 class MainViewModel : BaseViewModel() {
+ fun print(){
+     runOnUiThread(100L,{
+
+     })
+ }
 }

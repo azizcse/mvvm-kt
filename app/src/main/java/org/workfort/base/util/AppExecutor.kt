@@ -19,17 +19,17 @@ import java.util.concurrent.Executors
 */
 
 private val IO_EXECUTOR = Executors.newSingleThreadExecutor()
-private val handler : Handler = Handler(Looper.getMainLooper())
+private val handler: Handler = Handler(Looper.getMainLooper())
 
 fun runOnIoThread(t: () -> Unit) {
     IO_EXECUTOR.execute(t)
 }
 
 
-fun runOnUiThread(t:()->Unit){  
+fun runOnUiThread(t: () -> Unit) {
     handler.post(t)
 }
 
-fun runOnUiThread(t: () -> Unit, delay:Long){
+fun runOnUiThread(delay: Long, t: () -> Unit) {
     handler.postDelayed(t, delay)
 }
