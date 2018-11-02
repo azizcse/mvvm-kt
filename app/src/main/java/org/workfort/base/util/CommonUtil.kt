@@ -3,6 +3,8 @@ package org.workfort.base.util
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import org.workfort.base.App
 
 
@@ -27,7 +29,23 @@ fun ImageView.load(url: String) {
     Glide.with(App.getContext()).load(url).into(this)
 }
 
-fun String.isNull(){
-
+fun ImageView.loadWithCash(url: String) {
+    Glide.with(App.getContext())
+            .load(url)
+            .apply(RequestOptions()
+                    .skipMemoryCache(false)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL))
+            .into(this)
 }
+
+fun ImageView.loadWithoutCash(url : String){
+    Glide.with(App.getContext())
+            .load(url)
+            .apply(RequestOptions()
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE))
+            .into(this)
+}
+
+
 
