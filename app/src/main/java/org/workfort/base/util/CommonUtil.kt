@@ -19,6 +19,10 @@ import org.workfort.base.App
 *  ****************************************************************************
 */
 
+
+/**
+ * Image view extension function
+ */
 fun ImageView.load(url: String) {
     Glide.with(App.getContext()).load(url).into(this)
 }

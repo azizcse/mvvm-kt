@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import org.workfort.base.R
 import org.workfort.base.util.ImageUtil
+import org.workfort.base.util.PrefUtil
 import org.workfort.base.util.ScreenState
 import org.workfort.base.util.load
 
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val imageView = findViewById(R.id.image_view) as ImageView
         imageView.load("")
+        val value = PrefUtil.get("","")
     }
 
 
