@@ -8,6 +8,7 @@ buildscript {
         rx_android_version = "2.0.1"
         lifecycle = "1.1.1"
         rxjava2 = "2.1.7"
+        glide = "4.7.1"
     }
     repositories {
         google()
