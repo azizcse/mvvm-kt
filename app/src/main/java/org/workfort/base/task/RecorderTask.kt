@@ -1,5 +1,6 @@
 package org.workfort.base.task
 
+import android.util.Log
 import io.reactivex.FlowableEmitter
 
 
@@ -16,8 +17,17 @@ import io.reactivex.FlowableEmitter
 *  ****************************************************************************
 */
 
-class RecorderTask : BaseTask<ByteArray>() {
-    override fun executeTask(subscribe: FlowableEmitter<ByteArray>) {
+class RecorderTask : BaseTask<ByteArray> {
+    private var record: AudioRecorder? = null
+    private val RECORD_BUFFER_SIZE: Int
 
+    constructor(RECORD_BUFFER_SIZE : Int){
+        this.RECORD_BUFFER_SIZE = RECORD_BUFFER_SIZE
+        Log.d("Received_bytes", "constructor()")
+    }
+    override fun executeTask(subscribe: FlowableEmitter<ByteArray>) {
+        Log.d("Received_bytes", "executeTask()")
+        record = AudioRecorder(RECORD_BUFFER_SIZE, subscribe)
+        record?.executeRecording()
     }
 }

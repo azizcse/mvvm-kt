@@ -24,13 +24,15 @@ import io.reactivex.subscribers.DefaultSubscriber
 abstract class BaseTask<T> {
     fun execute(subscriber: DefaultSubscriber<T>) {
         val flowAble = createObservable()
-        flowAble.subscribeOn(Schedulers.io()).subscribe { subscriber }
+        flowAble.subscribeOn(Schedulers.io()).subscribe(subscriber)
     }
 
 
-    private fun createObservable(): Flowable<Any> {
-        return Flowable.create<Any>({ e -> executeTask(e as FlowableEmitter<T>) }, BackpressureStrategy.BUFFER)
+    private fun createObservable(): Flowable<T> {
+        return Flowable.create<T>({ e -> executeTask(e as FlowableEmitter<T>) }, BackpressureStrategy.BUFFER)
     }
 
     abstract fun executeTask(subscribe: FlowableEmitter<T>)
 }
+
+
