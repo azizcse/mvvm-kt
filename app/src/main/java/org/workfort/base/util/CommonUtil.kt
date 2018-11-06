@@ -1,5 +1,6 @@
 package org.workfort.base.util
 
+import android.media.AudioFormat
 import android.widget.ImageView
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -46,6 +47,16 @@ fun ImageView.loadWithoutCash(url : String){
                     .diskCacheStrategy(DiskCacheStrategy.NONE))
             .into(this)
 }
+
+
+val RECEIVE_PORT = 8888
+
+val GO_IP = "192.168.49.1"
+
+val RECORDER_RATE = 8000
+val RECORDER_CHANNEL_OUT = AudioFormat.CHANNEL_OUT_MONO
+val RECORDER_CHANNEL_IN = AudioFormat.CHANNEL_IN_MONO
+val RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT
 
 
 
