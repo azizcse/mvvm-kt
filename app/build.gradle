@@ -54,12 +54,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //room
-
-    //implementation "android.arch.persistence.room:runtime:$room_version"
-
-    //implementation "android.arch.persistence.room:rxjava2:$room_version"
-
-    //annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     implementation "android.arch.persistence.room:rxjava2:$room_version"
@@ -92,17 +86,10 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
-
-    //implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.30.2'
-
-    // coroutines
-
-    //implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:0.30.2"
-
-    //implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.30.2"
-
-    //implementation 'androidx.core:core-ktx:0.1'
     api project(':techfort')
+
+    //Rx network
+    implementation 'com.amitshekhar.android:rx2-android-networking:1.0.1'
 }
 
 kotlin {

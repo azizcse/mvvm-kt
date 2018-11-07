@@ -39,7 +39,6 @@ object GsonUtil {
         } catch (e: Exception) {
 
         }
-
         return null
     }
 
