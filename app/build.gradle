@@ -89,7 +89,8 @@ dependencies {
     api project(':techfort')
 
     //Rx network
-    implementation 'com.amitshekhar.android:rx2-android-networking:1.0.1'
+    //implementation 'com.amitshekhar.android:rx2-android-networking:1.0.1'
+    implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
 }
 
 kotlin {

@@ -10,18 +10,27 @@ import android.provider.Settings
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import com.jakewharton.rxbinding2.widget.RxTextView
+import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.DefaultSubscriber
 import io.underdark.Underdark
 import io.underdark.transport.Link
 import io.underdark.transport.Transport
 import io.underdark.transport.TransportKind
 import io.underdark.transport.TransportListener
+import org.json.JSONObject
 import org.workfort.base.R
 import org.workfort.base.task.RecorderTask
 import org.workfort.base.util.*
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), TransportListener {
 
@@ -34,13 +43,44 @@ class MainActivity : AppCompatActivity(), TransportListener {
     private var isRecording = false
 
     var connectedLinked = ArrayList<Link>()
+    private val disposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e("MainActivity", "onCreate()");
         setContentView(R.layout.activity_main)
+        val editText = findViewById<EditText>(R.id.editText)
         initLibrary()
+        searchImpl(editText)
+    }
 
+
+
+    fun searchImpl(editText: EditText){
+      disposable.add(RxTextView.textChangeEvents(editText)
+              .skipInitialValue()
+              .debounce(300L, TimeUnit.MILLISECONDS)
+              .distinctUntilChanged()
+              .subscribeOn(Schedulers.io())
+              .observeOn(AndroidSchedulers.mainThread())
+              .subscribeWith(searchContacts()))
+    }
+
+    private fun searchContacts(): DisposableObserver<TextViewTextChangeEvent> {
+        return object : DisposableObserver<TextViewTextChangeEvent>() {
+            override fun onNext(textViewTextChangeEvent: TextViewTextChangeEvent) {
+                //Call your method
+                //mAdapter.getFilter().filter(textViewTextChangeEvent.text())
+            }
+
+            override fun onError(e: Throwable) {
+
+            }
+
+            override fun onComplete() {
+
+            }
+        }
     }
 
     fun onClickButton(view: View) {
@@ -97,8 +137,12 @@ class MainActivity : AppCompatActivity(), TransportListener {
 
 
     fun initLibrary() {
+        val jo = JSONObject()
+        jo.put("hi","value")
+        jo.put("may","value2")
+
         val dark = Underdark.configureTransport(10621, toUuid(),
-                "",
+                jo.toString(),
                 this,
                 null,
                 this,
@@ -122,6 +166,8 @@ class MainActivity : AppCompatActivity(), TransportListener {
         return if (hashCode < 0) -hashCode else hashCode
 
     }
+
+
 
 
 }
