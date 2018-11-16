@@ -31,6 +31,10 @@ import org.workfort.base.task.RecorderTask
 import org.workfort.base.util.*
 import java.util.*
 import java.util.concurrent.TimeUnit
+import org.workfort.base.util.RECORDER_AUDIO_ENCODING
+import org.workfort.base.util.RECORDER_CHANNEL_IN
+import org.workfort.base.util.RECORDER_RATE
+import org.workfort.base.util.RECORDER_CHANNEL_OUT
 
 class MainActivity : AppCompatActivity(), TransportListener {
 
@@ -53,8 +57,6 @@ class MainActivity : AppCompatActivity(), TransportListener {
         initLibrary()
         searchImpl(editText)
     }
-
-
 
     fun searchImpl(editText: EditText){
       disposable.add(RxTextView.textChangeEvents(editText)
