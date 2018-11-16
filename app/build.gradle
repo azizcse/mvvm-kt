@@ -67,9 +67,10 @@ dependencies {
 
     //Rx-java
 
-    // implementation "io.reactivex.rxjava2:rxjava:$rxjava2"
-    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
-
+    //implementation "io.reactivex.rxjava2:rxjava:$rxjava2"
+    //implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.0.3'
     //lifecycle
     implementation "android.arch.lifecycle:reactivestreams:$lifecycle"
     implementation "android.arch.lifecycle:runtime:$lifecycle"
@@ -88,9 +89,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     api project(':techfort')
 
-    //Rx network
-    //implementation 'com.amitshekhar.android:rx2-android-networking:1.0.1'
-    implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
+
 }
 
 kotlin {

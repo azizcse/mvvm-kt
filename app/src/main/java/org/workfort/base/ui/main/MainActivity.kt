@@ -10,13 +10,15 @@ import android.provider.Settings
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import com.jakewharton.rxbinding2.widget.RxTextView
-import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.android.schedulers.AndroidSchedulers.*
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Consumer
+import io.reactivex.functions.Function
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.DefaultSubscriber
@@ -27,6 +29,7 @@ import io.underdark.transport.TransportKind
 import io.underdark.transport.TransportListener
 import org.json.JSONObject
 import org.workfort.base.R
+import org.workfort.base.network.NetworkState
 import org.workfort.base.task.RecorderTask
 import org.workfort.base.util.*
 import java.util.*
@@ -49,41 +52,21 @@ class MainActivity : AppCompatActivity(), TransportListener {
     var connectedLinked = ArrayList<Link>()
     private val disposable = CompositeDisposable()
 
+    lateinit var checkButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.e("MainActivity", "onCreate()");
         setContentView(R.layout.activity_main)
         val editText = findViewById<EditText>(R.id.editText)
+        checkButton = findViewById(R.id.button_check) as Button
+
         initLibrary()
-        searchImpl(editText)
+
+        buttonState()
+
     }
 
-    fun searchImpl(editText: EditText){
-      disposable.add(RxTextView.textChangeEvents(editText)
-              .skipInitialValue()
-              .debounce(300L, TimeUnit.MILLISECONDS)
-              .distinctUntilChanged()
-              .subscribeOn(Schedulers.io())
-              .observeOn(AndroidSchedulers.mainThread())
-              .subscribeWith(searchContacts()))
-    }
-
-    private fun searchContacts(): DisposableObserver<TextViewTextChangeEvent> {
-        return object : DisposableObserver<TextViewTextChangeEvent>() {
-            override fun onNext(textViewTextChangeEvent: TextViewTextChangeEvent) {
-                //Call your method
-                //mAdapter.getFilter().filter(textViewTextChangeEvent.text())
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-
-            override fun onComplete() {
-
-            }
-        }
-    }
 
     fun onClickButton(view: View) {
         /* if(PermissionUtil.on(this).request(Manifest.permission.RECORD_AUDIO)) {
@@ -132,7 +115,7 @@ class MainActivity : AppCompatActivity(), TransportListener {
 
     override fun transportLinkDidReceiveFrame(transport: Transport?, link: Link?, frameData: ByteArray?) {
         runOnUiThread({
-           val receiveValue = String(frameData!!)
+            val receiveValue = String(frameData!!)
             Toast.makeText(this, receiveValue, Toast.LENGTH_LONG).show()
         })
     }
@@ -140,8 +123,8 @@ class MainActivity : AppCompatActivity(), TransportListener {
 
     fun initLibrary() {
         val jo = JSONObject()
-        jo.put("hi","value")
-        jo.put("may","value2")
+        jo.put("hi", "value")
+        jo.put("may", "value2")
 
         val dark = Underdark.configureTransport(10621, toUuid(),
                 jo.toString(),
@@ -169,7 +152,40 @@ class MainActivity : AppCompatActivity(), TransportListener {
 
     }
 
+    private var sendStateSubscription: CompositeDisposable? = null
 
+    fun buttonState() {
+
+        val sendStateStream = NetworkState.stream(this)
+                .map(object : Function<Boolean, ButtonState> {
+                    override fun apply(connected: Boolean): ButtonState {
+                        if (connected) {
+                            return ButtonState("Connected", true)
+                        }
+                        return ButtonState("Not Connected", false)
+                    }
+                })
+
+        sendStateSubscription = CompositeDisposable()
+
+        sendStateSubscription!!.add(sendStateStream.observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Consumer<ButtonState> {
+                    override fun accept(buttonState: ButtonState) {
+                        checkButton.text = buttonState.name
+                        checkButton.isEnabled = buttonState.isEnable
+                    }
+                }))
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        sendStateSubscription!!.dispose()
+        sendStateSubscription = null
+    }
+
+
+    data class ButtonState constructor(val name: String, val isEnable: Boolean)
 
 
 }
