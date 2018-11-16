@@ -159,6 +159,7 @@ class MainActivity : AppCompatActivity(), TransportListener {
         val sendStateStream = NetworkState.stream(this)
                 .map(object : Function<Boolean, ButtonState> {
                     override fun apply(connected: Boolean): ButtonState {
+                        Log.e("rx_network","Network state ="+connected)
                         if (connected) {
                             return ButtonState("Connected", true)
                         }
@@ -168,7 +169,9 @@ class MainActivity : AppCompatActivity(), TransportListener {
 
         sendStateSubscription = CompositeDisposable()
 
-        sendStateSubscription!!.add(sendStateStream.observeOn(AndroidSchedulers.mainThread())
+        sendStateSubscription!!.add(sendStateStream
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe(object : Consumer<ButtonState> {
                     override fun accept(buttonState: ButtonState) {
                         checkButton.text = buttonState.name

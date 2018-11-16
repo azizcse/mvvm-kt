@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
+import android.util.Log
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.disposables.CompositeDisposable;
@@ -44,6 +45,7 @@ class SubscribeBroadcastReceiver constructor(
         compositeDisposable.add(object : Disposable {
             override fun dispose() {
                 context.unregisterReceiver(broadcastReceiver)
+                Log.e("rx_network","Destroy broadcast receiver")
             }
 
             override fun isDisposed(): Boolean {

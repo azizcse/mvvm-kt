@@ -10,6 +10,7 @@ import android.net.NetworkInfo;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function
 import android.net.ConnectivityManager.CONNECTIVITY_ACTION
+import android.util.Log
 
 
 /*
@@ -40,6 +41,7 @@ object NetworkState {
         return ContentObservable.fromBroadcast(context, action)
                 .map(object : Function<Intent, Boolean>{
                     override fun apply(t: Intent): Boolean {
+                        Log.e("rx_network","Received intent")
                        return getConnectivityStatus(applicationContext)
                     }
 
